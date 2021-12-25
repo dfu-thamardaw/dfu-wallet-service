@@ -1,0 +1,24 @@
+{
+  "name": "cl-wrapper",
+  "version": "1.0.0",
+  "description": "tl clientlib wrapper",
+  "scripts": {
+    "start": "node -r esm src/index.js",
+    "dev": "nodemon -r esm src/index.js"
+  },
+  "author": "thuaung30",
+  "license": "ISC",
+  "dependencies": {
+    "@trustlines/trustlines-clientlib": "^0.15.2",
+    "body-parser": "^1.19.1",
+    "dotenv": "^10.0.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.2",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

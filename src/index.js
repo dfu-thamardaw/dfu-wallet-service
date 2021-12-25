@@ -1,0 +1,34 @@
+import "dotenv/config";
+
+import express from "express";
+import fetch from "node-fetch";
+import bodyParser from "body-parser";
+import routes from "./routes";
+import errorHandler from "./error_handler";
+
+// require because of this issue
+// https://github.com/expressjs/morgan/issues/190
+const morgan = require("morgan");
+
+// Do some magic for dependencies that are not available in node
+global.fetch = fetch;
+global.Headers = fetch.Headers;
+
+const port = process.env.PORT || 3001;
+
+const app = express();
+
+app.use(morgan('combined'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use("/user", routes.user);
+app.use("/network", routes.network);
+app.use("/trustline", routes.trustline);
+app.use("/event", routes.events);
+app.use("/payment", routes.payment);
+app.use(errorHandler)
+
+app.listen(port, () => {
+  console.log(`${process.env.NODE_ENV} server started at port ${port}`);
+});
