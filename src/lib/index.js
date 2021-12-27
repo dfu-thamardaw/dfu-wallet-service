@@ -60,13 +60,14 @@ export const prepareTrustlineUpdate = (
   options = {}
 ) => {
   __DEV__ && console.log("ClientLib", "prepareTrustlineUpdate");
-  return TL.trustline.prepareUpdate(
+  const { rawTx } =  TL.trustline.prepareUpdate(
     networkAddress,
     contactAddress,
     clGiven,
     clReceived,
     options
   );
+  return confirmTrustlineTransaction(rawTx);
 };
 
 export const prepareTrustlineAccept = (
@@ -77,13 +78,14 @@ export const prepareTrustlineAccept = (
   options = {}
 ) => {
   __DEV__ && console.log("ClientLib", "prepareTrustlineAccept");
-  return TL.trustline.prepareAccept(
+  const { rawTx } = TL.trustline.prepareAccept(
     networkAddress,
     contactAddress,
     clGiven,
     clReceived,
     options
   );
+  return confirmTrustlineTransaction(rawTx);
 };
 
 export const confirmTrustlineTransaction = (tx) => {

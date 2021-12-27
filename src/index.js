@@ -5,6 +5,9 @@ import fetch from "node-fetch";
 import bodyParser from "body-parser";
 import routes from "./routes";
 import errorHandler from "./error_handler";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { options } from "./config"
 
 // require because of this issue
 // https://github.com/expressjs/morgan/issues/190
@@ -21,6 +24,10 @@ const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+
+const specs = swaggerJsdoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use("/user", routes.user);
 app.use("/network", routes.network);

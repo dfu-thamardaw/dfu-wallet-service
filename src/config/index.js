@@ -8,3 +8,15 @@ export const clientlibconfig = {
 }
 
 export const __DEV__ = process.env.NODE_ENV === "development";
+
+export const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Trustline Clientlib API",
+      version: "0.1.0",
+      description: "Trustline clientlib API for use with flutter",
+    },
+  },
+  apis: ["./src/routes/*.js"]
+}
