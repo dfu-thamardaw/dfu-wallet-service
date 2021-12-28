@@ -8,6 +8,7 @@ import errorHandler from "./error_handler";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { options } from "./config"
+import cors from "cors";
 
 // require because of this issue
 // https://github.com/expressjs/morgan/issues/190
@@ -24,8 +25,8 @@ const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-
+app.use(cors());
+ 
 const specs = swaggerJsdoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
