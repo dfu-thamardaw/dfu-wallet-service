@@ -55,4 +55,4 @@ You can also add any other information you want to convey.
 ## Future Endeavours
 
 - Convert the whole project to typescript.
-- Add tests
+- Add tests.
