@@ -105,11 +105,11 @@ export const getEvents = (networkAddress, filter) => {
   ]);
 };
 
-export const getEventsForAllNetworks = () => {
+export const getEventsForAllNetworks = (filter) => {
   __DEV__ && console.log("ClientLib", "getEventsForAllNetworks");
   return Promise.race([
     rejectAfterTimeout(20000, "Events for all Networks"),
-    TL.event.getAll(),
+    TL.event.getAll(filter),
   ]);
 };
 

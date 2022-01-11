@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { isEmpty } from "lodash";
 import * as client from "../lib";
+import { badRequestHandler } from "../error_handler";
 
 const router = Router();
 
@@ -41,7 +42,7 @@ const router = Router();
  */
 router.post("/", async (req, res, next) => {
   let wallet = req.body;
-  if (!wallet || !isEmpty(wallet)) {
+  if (!wallet || isEmpty(wallet)) {
     const error = new Error("Invalid wallet");
     badRequestHandler(error, req, res, next);
   }
