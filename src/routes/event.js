@@ -1,5 +1,5 @@
-import { Router } from "express"
-import {isEmpty} from "lodash";
+import { Router } from "express";
+import { isEmpty } from "lodash";
 import * as client from "../lib";
 
 const router = Router();
@@ -41,16 +41,15 @@ const router = Router();
  */
 router.post("/", async (req, res, next) => {
   let wallet = req.body;
-  if(!wallet || !isEmpty(wallet)) {
+  if (!wallet || !isEmpty(wallet)) {
     const error = new Error("Invalid wallet");
     badRequestHandler(error, req, res, next);
   }
-  filter = {};
   try {
     await client.loadAccount(wallet);
-    const response = await client.getEventsForAllNetworks(filter);
+    const response = await client.getEventsForAllNetworks();
     res.send(response);
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 });

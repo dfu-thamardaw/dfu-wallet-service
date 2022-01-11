@@ -1,19 +1,16 @@
-import {TLNetwork} from "@trustlines/trustlines-clientlib";
+import { TLNetwork } from "@trustlines/trustlines-clientlib";
 import { __DEV__, clientlibconfig } from "../config";
 
 const TL = new TLNetwork(clientlibconfig);
 
-const rejectAfterTimeout = (
-  time,
-  label
-) => {
+const rejectAfterTimeout = (time, label) => {
   return new Promise((_resolve, reject) =>
     setTimeout(
       () => reject(new Error(`${label}: Timeout after ${time} ms`)),
       time
     )
   );
-}
+};
 
 /**
  * user methods
@@ -28,7 +25,7 @@ export const createCredentials = async () => {
 export const deployIdentity = async (walletCredentials) => {
   __DEV__ && console.log("ClientLib", "deployIdentity");
 
-  await loadAccount(walletCredentials)
+  await loadAccount(walletCredentials);
   const txHash = await TL.user.deployIdentity();
   return txHash;
 };
@@ -60,7 +57,7 @@ export const prepareTrustlineUpdate = (
   options = {}
 ) => {
   __DEV__ && console.log("ClientLib", "prepareTrustlineUpdate");
-  const { rawTx } =  TL.trustline.prepareUpdate(
+  const { rawTx } = TL.trustline.prepareUpdate(
     networkAddress,
     contactAddress,
     clGiven,
@@ -100,10 +97,7 @@ export const confirmTrustlineTransaction = (tx) => {
 /**
  * Events based actions
  */
-export const getEvents = (
-  networkAddress,
-  filter
-) => {
+export const getEvents = (networkAddress, filter) => {
   __DEV__ && console.log("ClientLib", "getEvents");
   return Promise.race([
     rejectAfterTimeout(10000, "Events"),
@@ -111,7 +105,7 @@ export const getEvents = (
   ]);
 };
 
-export const getEventsForAllNetworks = (filter = {}) => {
+export const getEventsForAllNetworks = (filter) => {
   __DEV__ && console.log("ClientLib", "getEventsForAllNetworks");
   return Promise.race([
     rejectAfterTimeout(20000, "Events for all Networks"),
@@ -130,10 +124,7 @@ export const getAllNetworks = () => {
   ]);
 };
 
-export const getNetworkUserData = (
-  networkAddress,
-  userAddress
-) => {
+export const getNetworkUserData = (networkAddress, userAddress) => {
   __DEV__ && console.log("ClientLib", "getNetworkUserData");
   return Promise.race([
     rejectAfterTimeout(10000, "Network"),
@@ -144,11 +135,7 @@ export const getNetworkUserData = (
 /**
  * Payment based methods
  */
-export const sendPayment = async (
-  networkAddress,
-  receiverAddress,
-  value
-) => {
+export const sendPayment = async (networkAddress, receiverAddress, value) => {
   const { rawTx } = await TL.payment.prepare(
     networkAddress,
     receiverAddress,
@@ -161,4 +148,3 @@ export const sendPayment = async (
 
   __DEV__ && console.log("Transaction hash: ", txHash);
 };
-
