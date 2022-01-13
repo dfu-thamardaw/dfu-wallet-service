@@ -42,11 +42,15 @@ const router = Router();
  *             $ref: '#/components/schemas/TrustlineRequest'
  *     responses:
  *       200:
- *         description: Return trustline object.
+ *         description: Return transaction hash.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Events'
+ *               type: object
+ *               properties:
+ *                 txHash:
+ *                   type: string
+ *                   example: 0x...
  *       400:
  *         description: Invaid argument
  *       500:
@@ -73,13 +77,14 @@ router.post("/update", async (req, res, next) => {
 
   try {
     await client.loadAccount(wallet);
-    const response = await client.prepareTrustlineUpdate(
+    const { rawTx } = await client.prepareTrustlineUpdate(
       networkAddress,
       contactAddress,
       clGiven,
       clReceived
     );
-    res.send(response);
+    const txHash = await client.confirmTrustlineTransaction(rawTx);
+    res.send({ txHash });
   } catch (err) {
     next(err);
   }
@@ -99,11 +104,15 @@ router.post("/update", async (req, res, next) => {
  *             $ref: '#/components/schemas/TrustlineRequest'
  *     responses:
  *       200:
- *         description: Return trustline object.
+ *         description: Return transaction hash.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Events'
+ *               type: object
+ *               properties:
+ *                 txHash:
+ *                   type: string
+ *                   example: 0x...
  *       400:
  *         description: Invaid argument
  *       500:
@@ -122,7 +131,7 @@ router.post("/accept", async (req, res, next) => {
     !clGiven ||
     !clReceived ||
     !wallet ||
-    !isEmpty(wallet)
+    isEmpty(wallet)
   ) {
     const error = new Error("Invalid argument");
     badRequestHandler(error, req, res, next);
@@ -130,13 +139,14 @@ router.post("/accept", async (req, res, next) => {
 
   try {
     await client.loadAccount(wallet);
-    const response = await client.prepareTrustlineAccept(
+    const { rawTx } = await client.prepareTrustlineAccept(
       networkAddress,
       contactAddress,
       clGiven,
       clReceived
     );
-    res.send(response);
+    const txHash = await client.confirmTrustlineTransaction(tx);
+    res.send({ txHash });
   } catch (err) {
     next(err);
   }
