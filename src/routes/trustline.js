@@ -77,13 +77,12 @@ router.post("/update", async (req, res, next) => {
 
   try {
     await client.loadAccount(wallet);
-    const { rawTx } = await client.prepareTrustlineUpdate(
+    const txHash = await client.prepareTrustlineUpdate(
       networkAddress,
       contactAddress,
       clGiven,
       clReceived
     );
-    const txHash = await client.confirmTrustlineTransaction(rawTx);
     res.send({ txHash });
   } catch (err) {
     next(err);
@@ -139,13 +138,12 @@ router.post("/accept", async (req, res, next) => {
 
   try {
     await client.loadAccount(wallet);
-    const { rawTx } = await client.prepareTrustlineAccept(
+    const txHash = await client.prepareTrustlineAccept(
       networkAddress,
       contactAddress,
       clGiven,
       clReceived
     );
-    const txHash = await client.confirmTrustlineTransaction(tx);
     res.send({ txHash });
   } catch (err) {
     next(err);
