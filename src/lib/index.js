@@ -83,9 +83,10 @@ export const prepareTrustlineAccept = (
 
 export const confirmTrustlineTransaction = (tx) => {
   __DEV__ && console.log("ClientLib", "confirmTrustlineTX");
-  if (!tx) {
-    return Promise.reject(new Error("No TX given"));
-  }
+
+  // if (!tx) {
+  //   return Promise.reject(new Error("No TX given"));
+  // }
 
   return TL.trustline.confirm(tx);
 };
