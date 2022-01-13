@@ -49,14 +49,14 @@ export const recoverCredentialsFromPrivateKey = async (key) => {
 /**
  * trustline methods
  */
-export const prepareTrustlineUpdate = (
+export const prepareTrustlineUpdate = async (
   networkAddress,
   contactAddress,
   clGiven,
   clReceived
 ) => {
   __DEV__ && console.log("ClientLib", "prepareTrustlineUpdate");
-  const { rawTx } = TL.trustline.prepareUpdate(
+  const { rawTx } = await TL.trustline.prepareUpdate(
     networkAddress,
     contactAddress,
     clGiven,
@@ -65,14 +65,14 @@ export const prepareTrustlineUpdate = (
   return confirmTrustlineTransaction(rawTx);
 };
 
-export const prepareTrustlineAccept = (
+export const prepareTrustlineAccept = async (
   networkAddress,
   contactAddress,
   clGiven,
   clReceived
 ) => {
   __DEV__ && console.log("ClientLib", "prepareTrustlineAccept");
-  const { rawTx } = TL.trustline.prepareAccept(
+  const { rawTx } = await TL.trustline.prepareAccept(
     networkAddress,
     contactAddress,
     clGiven,
@@ -84,9 +84,9 @@ export const prepareTrustlineAccept = (
 export const confirmTrustlineTransaction = (tx) => {
   __DEV__ && console.log("ClientLib", "confirmTrustlineTX");
 
-  // if (!tx) {
-  //   return Promise.reject(new Error("No TX given"));
-  // }
+  if (!tx) {
+    return Promise.reject(new Error("No TX given"));
+  }
 
   return TL.trustline.confirm(tx);
 };
