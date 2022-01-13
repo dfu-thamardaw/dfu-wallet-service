@@ -1,6 +1,6 @@
-import { Router } from "express"
-import {isEmpty} from "lodash";
-import {badRequestHandler} from "../error_handler";
+import { Router } from "express";
+import { isEmpty } from "lodash";
+import { badRequestHandler } from "../error_handler";
 import * as client from "../lib";
 
 const router = Router();
@@ -20,10 +20,10 @@ const router = Router();
  *          example: 0x...
  *        clGiven:
  *          type: string
- *          example: 1000 
+ *          example: 1000
  *        clReceived:
  *          type: string
- *          example: 1000 
+ *          example: 1000
  *        wallet:
  *          $ref: '#components/schemas/Wallet'
  */
@@ -33,7 +33,7 @@ const router = Router();
  * /trustline/update:
  *   post:
  *     summary: Update trustline.
- *     description: Update trustline. 
+ *     description: Update trustline.
  *     requestBody:
  *       required: true,
  *       content:
@@ -59,18 +59,18 @@ router.post("/update", async (req, res, next) => {
   const clReceived = req.body.clReceived;
   const wallet = req.body.wallet;
 
-  if(
-    !networkAddress 
-    || !contactAddress 
-    || !clGiven
-    || !clReceived
-    || !wallet
-    || !isEmpty(wallet)
-  ){
+  if (
+    !networkAddress ||
+    !contactAddress ||
+    !clGiven ||
+    !clReceived ||
+    !wallet ||
+    isEmpty(wallet)
+  ) {
     const error = new Error("Invalid argument");
-    badRequestHandler(error, req, res, next)
+    badRequestHandler(error, req, res, next);
   }
-  
+
   try {
     await client.loadAccount(wallet);
     const response = await client.prepareTrustlineUpdate(
@@ -80,17 +80,17 @@ router.post("/update", async (req, res, next) => {
       clReceived
     );
     res.send(response);
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
-})
+});
 
 /**
  * @swagger
  * /trustline/accept:
  *   post:
  *     summary: Accept trustline.
- *     description: Accept trustline. 
+ *     description: Accept trustline.
  *     requestBody:
  *       required: true,
  *       content:
@@ -115,19 +115,19 @@ router.post("/accept", async (req, res, next) => {
   const clGiven = req.body.clGiven;
   const clReceived = req.body.clReceived;
   const wallet = req.body.wallet;
-  
-  if(
-    !networkAddress 
-    || !contactAddress 
-    || !clGiven
-    || !clReceived
-    || !wallet
-    || !isEmpty(wallet)
-  ){
+
+  if (
+    !networkAddress ||
+    !contactAddress ||
+    !clGiven ||
+    !clReceived ||
+    !wallet ||
+    !isEmpty(wallet)
+  ) {
     const error = new Error("Invalid argument");
-    badRequestHandler(error, req, res, next)
+    badRequestHandler(error, req, res, next);
   }
-  
+
   try {
     await client.loadAccount(wallet);
     const response = await client.prepareTrustlineAccept(
@@ -137,16 +137,15 @@ router.post("/accept", async (req, res, next) => {
       clReceived
     );
     res.send(response);
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
-})
-
+});
 
 // router.post("/confirm", async (req, res, next) => {
 //   const tx = req.body.tx;
 //   if(
-//     !tx 
+//     !tx
 //     || !wallet
 //     || !isEmpty(wallet)
 //   ){
