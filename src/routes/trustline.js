@@ -161,7 +161,13 @@ router.post("/accept", async (req, res, next) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Wallet'
+ *             type: object
+ *             properties:
+ *               networkAddress:
+ *                 type: string
+ *                 example: 0x...
+ *               wallet:
+ *                 $ref: '#/components/schemas/Wallet'
  *     responses:
  *       200:
  *         description: Return trustline requests.
@@ -177,14 +183,14 @@ router.post("/accept", async (req, res, next) => {
  *         description: Internal server error
  */
 router.post("/request", async (req, res, next) => {
-  const body = req.body;
-  if (isEmpty(body)) {
+  const { networkAddress, wallet } = req.body;
+  if (isEmpty(wallet) || isEmpty(networkAddress)) {
     const error = new Error("Bad request");
     badRequestHandler(error, req, res, next);
   }
   try {
-    await client.loadAccount(body);
-    const response = await client.requestTrustlines();
+    await client.loadAccount(wallet);
+    const response = await client.requestTrustlines(networkAddress);
     res.send(response);
   } catch (err) {
     next(err);

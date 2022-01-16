@@ -91,9 +91,9 @@ export const confirmTrustlineTransaction = (tx) => {
   return TL.trustline.confirm(tx);
 };
 
-export const requestTrustlines = async () => {
+export const requestTrustlines = async (networkAddress) => {
   __DEV__ && console.log("ClientLib", "requestTrustlines");
-  return await TL.trustline.getRequests();
+  return await TL.trustline.getRequests(networkAddress);
 };
 
 /**
