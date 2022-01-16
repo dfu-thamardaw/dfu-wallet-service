@@ -63,14 +63,7 @@ router.post("/update", async (req, res, next) => {
   const clReceived = req.body.clReceived;
   const wallet = req.body.wallet;
 
-  if (
-    !networkAddress ||
-    !contactAddress ||
-    !clGiven ||
-    !clReceived ||
-    !wallet ||
-    isEmpty(wallet)
-  ) {
+  if (!networkAddress || !contactAddress || !wallet || isEmpty(wallet)) {
     const error = new Error("Invalid argument");
     badRequestHandler(error, req, res, next);
   }
@@ -100,6 +93,7 @@ router.post("/update", async (req, res, next) => {
  *       content:
  *         application/json:
  *           schema:
+ *             $ref: '#/components/schemas/Wallet'
  *             $ref: '#/components/schemas/TrustlineRequest'
  *     responses:
  *       200:
@@ -124,14 +118,7 @@ router.post("/accept", async (req, res, next) => {
   const clReceived = req.body.clReceived;
   const wallet = req.body.wallet;
 
-  if (
-    !networkAddress ||
-    !contactAddress ||
-    !clGiven ||
-    !clReceived ||
-    !wallet ||
-    isEmpty(wallet)
-  ) {
+  if (!networkAddress || !contactAddress || !wallet || isEmpty(wallet)) {
     const error = new Error("Invalid argument");
     badRequestHandler(error, req, res, next);
   }
