@@ -103,13 +103,15 @@ router.post("/update", async (req, res, next) => {
  *             $ref: '#/components/schemas/Wallet'
  *     responses:
  *       200:
- *         description: Return trustline requests.
+ *         description: Return transaction hash.
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/NetworkTrustlineUpdateEvent'
+ *               type: object
+ *               properties:
+ *                 txHash:
+ *                   type: string
+ *                   example: 0x...
  *       400:
  *         description: Invaid argument
  *       500:
@@ -159,18 +161,16 @@ router.post("/accept", async (req, res, next) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/TrustlineRequest'
+ *             $ref: '#/components/schemas/Wallet'
  *     responses:
  *       200:
- *         description: Return transaction hash.
+ *         description: Return trustline requests.
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 txHash:
- *                   type: string
- *                   example: 0x...
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/NetworkTrustlineUpdateEvent'
  *       400:
  *         description: Invaid argument
  *       500:

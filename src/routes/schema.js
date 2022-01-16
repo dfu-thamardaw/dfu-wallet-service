@@ -39,7 +39,7 @@
  *                   type: string
  *                   example: 0x...
  *    NetworkTrustlineUpdateEvent:
- *      type: objec
+ *      type: object
  *      properties:
  *        blockHash:
  *          type: string

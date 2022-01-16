@@ -30,7 +30,7 @@ const router = Router();
  *             $ref: '#/components/schemas/Wallet'
  *     responses:
  *       200:
- *         description: Return events of provied user
+ *         description: Return events of provided user
  *         content:
  *           application/json:
  *             schema:
