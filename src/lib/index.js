@@ -91,6 +91,11 @@ export const confirmTrustlineTransaction = (tx) => {
   return TL.trustline.confirm(tx);
 };
 
+export const requestTrustlines = async () => {
+  __DEV__ && console.log("ClientLib", "requestTrustlines");
+  return await TL.trustline.getRequests();
+};
+
 /**
  * Events based actions
  */

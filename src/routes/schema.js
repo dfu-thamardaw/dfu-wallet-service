@@ -38,4 +38,57 @@
  *                 privateKey:
  *                   type: string
  *                   example: 0x...
+ *    NetworkTrustlineUpdateEvent:
+ *      type: objec
+ *      properties:
+ *        blockHash:
+ *          type: string
+ *          example: 0x...
+ *        blockNumber:
+ *          type: string
+ *          example: 0x...
+ *        counterParty:
+ *          type: string
+ *          example: 0x...
+ *        direction:
+ *          type: string
+ *          example: received
+ *        from:
+ *          type: string
+ *          example: 0x...
+ *        given:
+ *          $ref: '#/components/schemas/Amount'
+ *        interestRateGiven:
+ *          $ref: '#/components/schemas/Amount'
+ *        interestRateReceived:
+ *          $ref: '#/components/schemas/Amount'
+ *        isFrozen:
+ *          type: boolean
+ *          example: false
+ *        logIndex:
+ *          type: number
+ *  `       example: ...
+ *        networkAddress:
+ *          type: string
+ *          example: 0x...
+ *        received:
+ *          $ref: '#/components/schemas/Amount'
+ *        status:
+ *          type: string
+ *          example: confirmed
+ *        timestamp:
+ *          type: number
+ *          example: ...
+ *        to:
+ *          type: string
+ *          example: 0x...
+ *        transactionHash:
+ *          type: string
+ *          example: 0x...
+ *        type:
+ *          type: string
+ *          example: TrustlineUpdate
+ *        user:
+ *          type: string
+ *          example: 0x...
  */

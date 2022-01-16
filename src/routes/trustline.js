@@ -100,18 +100,16 @@ router.post("/update", async (req, res, next) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/TrustlineRequest'
+ *             $ref: '#/components/schemas/Wallet'
  *     responses:
  *       200:
- *         description: Return transaction hash.
+ *         description: Return trustline requests.
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 txHash:
- *                   type: string
- *                   example: 0x...
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/NetworkTrustlineUpdateEvent'
  *       400:
  *         description: Invaid argument
  *       500:
@@ -145,6 +143,49 @@ router.post("/accept", async (req, res, next) => {
       clReceived
     );
     res.send({ txHash });
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
+ * @swagger
+ * /trustline/request:
+ *   post:
+ *     summary: Return trustline requests.
+ *     description: Return trustline requests.
+ *     requestBody:
+ *       required: true,
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/TrustlineRequest'
+ *     responses:
+ *       200:
+ *         description: Return transaction hash.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 txHash:
+ *                   type: string
+ *                   example: 0x...
+ *       400:
+ *         description: Invaid argument
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/request", async (req, res, next) => {
+  const body = req.body;
+  if (isEmpty(body)) {
+    const error = new Error("Bad request");
+    badRequestHandler(error, req, res, next);
+  }
+  try {
+    await client.loadAccount(body);
+    const response = await client.requestTrustlines();
+    res.send(response);
   } catch (err) {
     next(err);
   }
