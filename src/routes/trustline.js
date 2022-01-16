@@ -100,7 +100,7 @@ router.post("/update", async (req, res, next) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Wallet'
+ *             $ref: '#/components/schemas/TrustlineRequest'
  *     responses:
  *       200:
  *         description: Return transaction hash.
