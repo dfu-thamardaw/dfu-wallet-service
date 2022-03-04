@@ -1,0 +1,25 @@
+version: 3.7
+services:
+  wrapper-backend:
+    container-name: wrapper-backend
+    build:
+      context: .
+    ports:
+      - 3002:3002
+    depends-on:
+      - wrapper-db
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+      - SECRET=qwevioadjfalfajfadskfjvn
+      - DATABASE_URL=mongodb://wrapper-db:27018/wrapper
+  wrapper-db:
+    container-name: wrapper-db
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27018:27017
+    volumes:
+      - wrapper-db-data:/data/db
+volumes:
+  wrapper-db-data:
