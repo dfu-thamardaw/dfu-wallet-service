@@ -157,7 +157,7 @@ router.post("/recoverFromPrivateKey", async (req, res, next) => {
 
 /**
  * @swagger
- * /v2/deleteUser/{userId}:
+ * /v2/{userId}:
  *   delete:
  *     summary: Delete user
  *     descriptions: Delete user
@@ -179,7 +179,7 @@ router.post("/recoverFromPrivateKey", async (req, res, next) => {
  *       500:
  *         description: Internal server error
  */
-router.delete("/deleteUser/:userId", async (req, res, next) => {
+router.delete("/:userId", async (req, res, next) => {
   try {
     await User.deleteOne({ uid: req.params.userId });
     res.send("ok");
