@@ -157,7 +157,7 @@ router.post("/recoverFromPrivateKey", async (req, res, next) => {
 
 /**
  * @swagger
- * /v2/{userId}:
+ * /v2/user/{userId}:
  *   delete:
  *     summary: Delete user
  *     descriptions: Delete user
