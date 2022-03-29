@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { route } from "express/lib/application";
 import { __DEV__ } from "../config";
 import { badRequestHandler } from "../error_handler";
 import * as client from "../lib";
@@ -151,6 +150,39 @@ router.post("/recoverFromPrivateKey", async (req, res, next) => {
   try {
     const wallet = await client.recoverCredentialsFromPrivateKey(key);
     res.send(wallet);
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
+ * @swagger
+ * /v2/deleteUser/{userId}:
+ *   delete:
+ *     summary: Delete user
+ *     descriptions: Delete user
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: UUID of user
+ *     responses:
+ *       200:
+ *         description: Return ok.
+ *         content:
+ *           text/html; charset=utf-8:
+ *             schema:
+ *               type: string
+ *               example: ok
+ *       500:
+ *         description: Internal server error
+ */
+router.delete("/deleteUser/:userId", async (req, res, next) => {
+  try {
+    await User.deleteOne({ uid: req.params.userId });
+    res.send("ok");
   } catch (err) {
     next(err);
   }
