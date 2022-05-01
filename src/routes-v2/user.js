@@ -8,6 +8,14 @@ const router = Router();
 
 /**
  * @swagger
+ * components:
+ *   schema:
+ *     WalletAddress:
+ *       type: Object
+ *       properties:
+ *         walletAddress: 
+ *           type: string
+ *           example: 0x...
  * /v2/user/{userId}:
  *   get:
  *     summary: Create identity type trustline wallet.
@@ -23,9 +31,9 @@ const router = Router();
  *       200:
  *         description: Return wallet address.
  *         content:
- *           text/html; charset=utf-8:
+ *           application/json:
  *             schema:
- *               type: string
+ *               $ref: '#/components/schema/WalletAddress'
  *       500:
  *         description: Internal server error
  */
@@ -47,28 +55,13 @@ router.get("/:userId", async (req, res, next) => {
       },
     });
     await user.save();
-    res.send(wallet.address);
+    res.send({
+      walletAddress: wallet.address
+    });
   } catch (err) {
     next(err);
   }
 });
-
-/**
- * @swagger
- * /v2/user/:
- *   get:
- *     summary: Create identity type trustline wallet.
- *     description: Create identity type trustline wallet and return wallet data.
- *     responses:
- *       200:
- *         description: Return wallet data
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Wallet'
- *       500:
- *         description: Internal server error
- */
 
 /**
  * @swagger
