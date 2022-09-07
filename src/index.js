@@ -32,7 +32,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const specs = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use("/user", routes.user);
 app.use("/network", routes.network);
@@ -41,6 +41,8 @@ app.use("/event", routes.events);
 app.use("/payment", routes.payment);
 
 app.use("/v2/user", routesV2.user);
+app.use("/v2/payment", routesV2.payment);
+app.use("/v2/network", routesV2.network);
 
 app.use(errorHandler);
 

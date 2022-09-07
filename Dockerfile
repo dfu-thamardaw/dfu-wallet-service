@@ -7,4 +7,4 @@ RUN yarn
 
 COPY . .
 EXPOSE 3002
-CMD ["yarn", "start"]
+CMD ["node", "-r", "esm", "src/index.js"]
